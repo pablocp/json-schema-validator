@@ -80,6 +80,6 @@ public abstract class AbstractFormatAttribute
         return data.newMessage().put("domain", "validation")
             .put("keyword", "format").put("attribute", fmt)
             .setMessage(bundle.getMessage(key))
-            .put("value", data.getInstance().getNode());
+            .putJson("value", data.getInstance().getNode());
     }
 }

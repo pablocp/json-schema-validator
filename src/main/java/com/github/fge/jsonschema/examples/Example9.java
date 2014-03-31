@@ -234,7 +234,7 @@ public final class Example9
                         .put("found", type));
                 else if (element.bigIntegerValue().compareTo(BigInteger.ONE) < 0)
                     report.error(newMsg(tree, bundle, "integerIsNegative")
-                        .put("value", element));
+                        .putJson("value", element));
                 uniqueItems = set.add(element);
             }
 

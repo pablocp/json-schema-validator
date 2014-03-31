@@ -83,6 +83,6 @@ public final class DisallowKeywordValidator
             report.error(newMsg(data, bundle, "err.draftv3.disallow.schema")
                 .putArgument("matched", nrSuccess)
                 .putArgument("nrSchemas", schemas.size())
-                .put("reports", fullReport));
+                .putJson("reports", fullReport));
     }
 }

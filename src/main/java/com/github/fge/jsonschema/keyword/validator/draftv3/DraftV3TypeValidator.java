@@ -102,6 +102,6 @@ public final class DraftV3TypeValidator
         if (!schemas.isEmpty())
             report.error(newMsg(data, bundle, "err.common.schema.noMatch")
                 .putArgument("nrSchemas", schemas.size())
-                .put("reports", fullReport));
+                .putJson("reports", fullReport));
     }
 }

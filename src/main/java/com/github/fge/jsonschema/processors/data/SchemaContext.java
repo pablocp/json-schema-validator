@@ -69,6 +69,6 @@ public final class SchemaContext
     @Override
     public ProcessingMessage newMessage()
     {
-        return new ProcessingMessage().put("schema", schema);
+        return new ProcessingMessage().putSerialized("schema", schema);
     }
 }

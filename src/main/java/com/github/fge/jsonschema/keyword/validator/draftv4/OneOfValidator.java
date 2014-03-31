@@ -74,6 +74,6 @@ public final class OneOfValidator
             report.error(newMsg(data, bundle, "err.draftv4.oneOf.fail")
                 .putArgument("matched", nrSuccess)
                 .putArgument("nrSchemas", size)
-                .put("reports", fullReport));
+                .putJson("reports", fullReport));
     }
 }

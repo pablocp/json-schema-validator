@@ -25,7 +25,7 @@ import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jsonschema.core.report.LogLevel;
 import com.github.fge.jsonschema.core.report.ProcessingMessage;
 import com.github.fge.jsonschema.core.tree.SchemaTree;
-import com.github.fge.jsonschema.core.util.AsJson;
+import com.github.fge.jsonschema.core.util.JsonUtils;
 import org.fest.assertions.GenericAssert;
 
 import java.util.Collection;
@@ -54,7 +54,7 @@ public final class ProcessingMessageAssert
     /*
      * Simple asserts
      */
-    public ProcessingMessageAssert hasField(final String name,
+    public ProcessingMessageAssert hasJsonField(final String name,
         final JsonNode value)
     {
         assertThat(msg.has(name)).isTrue();
@@ -64,33 +64,23 @@ public final class ProcessingMessageAssert
         return this;
     }
 
-    public ProcessingMessageAssert hasField(final String name,
-        final AsJson asJson)
+    public ProcessingMessageAssert hasSerializedField(final String name,
+        final Object value)
     {
-        return hasField(name, asJson.asJson());
+        return hasJsonField(name, JsonUtils.toJson(value));
     }
 
     // FIXME: for some reason, I have to declare an Integer here, int won't work
     public ProcessingMessageAssert hasField(final String name,
         final Integer value)
     {
-        assertThat(msg.has(name)).isTrue();
-        final JsonNode wanted = msg.get(name);
-        final JsonNode input = JacksonUtils.nodeFactory().numberNode(value);
-        assertEquals(input, wanted);
-        return this;
+        return hasJsonField(name, JacksonUtils.nodeFactory().numberNode(value));
     }
 
-    public <T> ProcessingMessageAssert hasField(final String name,
-        final T value)
+    public ProcessingMessageAssert hasField(final String name,
+        final Object value)
     {
-        assertThat(msg.has(name)).isTrue();
-        final String input = msg.get(name).textValue();
-        final String expected = value.toString();
-        assertThat(input).isEqualTo(expected)
-            .overridingErrorMessage("Strings differ: wanted " + expected
-                + " but got " + input);
-        return this;
+        return hasJsonField(name, JsonUtils.toString(value));
     }
 
     public <T> ProcessingMessageAssert hasField(final String name,
@@ -128,11 +118,6 @@ public final class ProcessingMessageAssert
         return hasField("level", level);
     }
 
-    public <T> ProcessingMessageAssert hasMessage(final T value)
-    {
-        return hasField("message", value);
-    }
-
     public ProcessingMessageAssert hasMessage(final String expected)
     {
         final String message = msg.get("message").textValue();
@@ -144,24 +129,24 @@ public final class ProcessingMessageAssert
      * More complicated matchers
      */
     public <T> ProcessingMessageAssert isSyntaxError(final String keyword,
-        final T msg, final SchemaTree tree)
+        final String msg, final SchemaTree tree)
     {
         // FIXME: .hasLevel() is not always set
         return hasField("keyword", keyword).hasMessage(msg)
-            .hasField("schema", tree).hasField("domain", "syntax");
+            .hasSerializedField("schema", tree).hasField("domain", "syntax");
     }
 
     /*
      * More complicated matchers
      */
-    public <T> ProcessingMessageAssert isValidationError(final String keyword,
-        final T msg)
+    public ProcessingMessageAssert isValidationError(final String keyword,
+        final String msg)
     {
         return hasField("keyword", keyword).hasMessage(msg)
             .hasField("domain", "validation");
     }
 
-    public <T> ProcessingMessageAssert isFormatMessage(final String fmt,
+    public ProcessingMessageAssert isFormatMessage(final String fmt,
         final String msg)
     {
         return hasField("keyword", "format").hasField("attribute", fmt)

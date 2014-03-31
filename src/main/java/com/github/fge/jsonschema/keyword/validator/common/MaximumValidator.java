@@ -65,7 +65,7 @@ public final class MaximumValidator
 
         report.error(newMsg(data, bundle, "err.common.maximum.notExclusive")
             .putArgument(keyword, number)
-            .put("exclusiveMaximum", BooleanNode.TRUE));
+            .putJson("exclusiveMaximum", BooleanNode.TRUE));
     }
 
     @Override
@@ -93,6 +93,6 @@ public final class MaximumValidator
 
         report.error(newMsg(data, bundle, "err.common.maximum.notExclusive")
             .putArgument(keyword, number)
-            .put("exclusiveMaximum", BooleanNode.TRUE));
+            .putJson("exclusiveMaximum", BooleanNode.TRUE));
     }
 }

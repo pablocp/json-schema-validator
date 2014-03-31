@@ -65,7 +65,7 @@ public final class MinimumValidator
 
         report.error(newMsg(data, bundle, "err.common.minimum.notExclusive")
             .putArgument(keyword, number)
-            .put("exclusiveMinimum", BooleanNode.TRUE));
+            .putJson("exclusiveMinimum", BooleanNode.TRUE));
     }
 
     @Override
@@ -93,6 +93,6 @@ public final class MinimumValidator
 
         report.error(newMsg(data, bundle, "err.common.minimum.notExclusive")
             .putArgument(keyword, number)
-            .put("exclusiveMinimum", BooleanNode.TRUE));
+            .putJson("exclusiveMinimum", BooleanNode.TRUE));
     }
 }

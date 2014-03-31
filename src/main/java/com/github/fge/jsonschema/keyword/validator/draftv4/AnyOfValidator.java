@@ -72,6 +72,6 @@ public final class AnyOfValidator
 
         if (nrSuccess == 0)
             report.error(newMsg(data, bundle, "err.common.schema.noMatch")
-                .putArgument("nrSchemas", size).put("reports", fullReport));
+                .putArgument("nrSchemas", size).putJson("reports", fullReport));
     }
 }
