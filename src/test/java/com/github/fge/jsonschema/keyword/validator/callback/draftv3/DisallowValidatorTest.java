@@ -60,7 +60,7 @@ public final class DisallowValidatorTest
             .isValidationError(keyword,
                 BUNDLE.printf("err.draftv3.disallow.schema", 2, 2))
                 .hasField("matched", 2).hasField("nrSchemas", 2)
-                .hasField("reports", reports);
+                .hasJsonField("reports", reports);
     }
 
     @Override
@@ -84,7 +84,7 @@ public final class DisallowValidatorTest
             .isValidationError(keyword,
                 BUNDLE.printf("err.draftv3.disallow.schema", 1, 2))
             .hasField("matched", 1).hasField("nrSchemas", 2)
-            .hasField("reports", reports);
+            .hasJsonField("reports", reports);
     }
 
     @Override

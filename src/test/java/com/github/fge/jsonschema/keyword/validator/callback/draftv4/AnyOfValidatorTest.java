@@ -73,7 +73,7 @@ public final class AnyOfValidatorTest
         assertMessage(message)
             .isValidationError(keyword,
                 BUNDLE.printf("err.common.schema.noMatch", 2))
-            .hasField("reports", reports);
+            .hasJsonField("reports", reports);
     }
 
     @Override

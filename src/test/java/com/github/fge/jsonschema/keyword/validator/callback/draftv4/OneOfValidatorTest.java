@@ -58,7 +58,7 @@ public final class OneOfValidatorTest
         assertMessage(message)
             .isValidationError(keyword,
                 BUNDLE.printf("err.draftv4.oneOf.fail", 2, 2))
-            .hasField("reports", reports).hasField("nrSchemas", 2)
+            .hasJsonField("reports", reports).hasField("nrSchemas", 2)
             .hasField("matched", 2);
     }
 
@@ -89,7 +89,7 @@ public final class OneOfValidatorTest
         assertMessage(message)
             .isValidationError(keyword,
                 BUNDLE.printf("err.draftv4.oneOf.fail", 0, 2))
-            .hasField("reports", reports).hasField("nrSchemas", 2)
+            .hasJsonField("reports", reports).hasField("nrSchemas", 2)
             .hasField("matched", 0);
     }
 

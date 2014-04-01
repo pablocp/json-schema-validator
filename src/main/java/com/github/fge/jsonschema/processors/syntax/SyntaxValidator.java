@@ -20,11 +20,11 @@ package com.github.fge.jsonschema.processors.syntax;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
-import com.github.fge.jsonschema.core.keyword.syntax.SyntaxProcessor;
 import com.github.fge.jsonschema.core.keyword.syntax.checkers.SyntaxChecker;
 import com.github.fge.jsonschema.core.processing.ProcessingResult;
 import com.github.fge.jsonschema.core.processing.Processor;
 import com.github.fge.jsonschema.core.processing.ProcessorMap;
+import com.github.fge.jsonschema.core.processors.SyntaxProcessor;
 import com.github.fge.jsonschema.core.ref.JsonRef;
 import com.github.fge.jsonschema.core.report.DevNullProcessingReport;
 import com.github.fge.jsonschema.core.report.ListProcessingReport;

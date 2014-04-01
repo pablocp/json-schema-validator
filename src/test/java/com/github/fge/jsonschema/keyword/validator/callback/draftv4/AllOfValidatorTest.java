@@ -66,7 +66,7 @@ public final class AllOfValidatorTest
         assertMessage(message)
             .isValidationError(keyword,
                 BUNDLE.printf("err.draftv4.allOf.fail", 1, 2))
-            .hasField("reports", reports).hasField("nrSchemas", 2)
+            .hasJsonField("reports", reports).hasField("nrSchemas", 2)
             .hasField("matched", 1);
     }
 
@@ -90,7 +90,7 @@ public final class AllOfValidatorTest
         assertMessage(message)
             .isValidationError(keyword,
                 BUNDLE.printf("err.draftv4.allOf.fail", 0, 2))
-            .hasField("reports", reports).hasField("nrSchemas", 2)
+            .hasJsonField("reports", reports).hasField("nrSchemas", 2)
             .hasField("matched", 0);
     }
 

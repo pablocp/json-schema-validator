@@ -20,11 +20,11 @@ package com.github.fge.jsonschema.processors.validation;
 
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
-import com.github.fge.jsonschema.core.keyword.syntax.SyntaxProcessor;
 import com.github.fge.jsonschema.core.load.RefResolver;
 import com.github.fge.jsonschema.core.processing.CachingProcessor;
 import com.github.fge.jsonschema.core.processing.Processor;
 import com.github.fge.jsonschema.core.processing.ProcessorChain;
+import com.github.fge.jsonschema.core.processors.SyntaxProcessor;
 import com.github.fge.jsonschema.core.report.ListProcessingReport;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.core.tree.SchemaTree;

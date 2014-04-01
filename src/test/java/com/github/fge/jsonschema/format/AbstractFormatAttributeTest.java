@@ -134,7 +134,7 @@ public abstract class AbstractFormatAttributeTest
         final ProcessingMessage message = captor.getValue();
 
         assertMessage(message).isFormatMessage(fmt, msg).hasContents(msgData)
-            .hasField("value", instance);
+            .hasJsonField("value", instance);
     }
 
     private static String buildMessage(final String key, final JsonNode params,

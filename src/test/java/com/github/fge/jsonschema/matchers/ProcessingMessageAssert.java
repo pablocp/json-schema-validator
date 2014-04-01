@@ -60,7 +60,8 @@ public final class ProcessingMessageAssert
         assertThat(msg.has(name)).isTrue();
         // We have to use assertEquals, otherwise it takes the node as a
         // Collection
-        assertEquals(msg.get(name), value);
+        assertTrue(msg.get(name).equals(value), "values differ: expected " +
+            value + " but got " + msg.get(name));
         return this;
     }
 
