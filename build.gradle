@@ -36,21 +36,37 @@
  * https://github.com/spring-projects/gradle-plugins/tree/master/propdeps-plugin
  */
 
+buildscript {
+    repositories {
+        mavenCentral();
+//        maven {
+//            url "http://repo.springsource.org/plugins-release";
+//        }
+    }
+    dependencies {
+        classpath(group: "com.github.rholder", name: "gradle-one-jar",
+            version: "1.0.4");
+//        classpath(group: "org.springframework.build.gradle",
+//            name: "propdeps-plugin", version: "0.0.5");
+    }
+};
+
+//configure(allprojects) {
+//    apply(plugin: "propdeps");
+//    apply(plugin: "propdeps-maven");
+//    apply(plugin: "propdeps-idea");
+//    apply(plugin: "propdeps-eclipse");
+//}
+
 apply(plugin: "java");
 apply(plugin: "maven");
 apply(plugin: "signing");
 apply(plugin: "osgi");
 apply(plugin: "idea");
 apply(plugin: "eclipse");
+apply(plugin: "gradle-one-jar");
 
-group = "com.github.fge";
-version = "2.2.6";
-sourceCompatibility = "1.6";
-targetCompatibility = "1.6"; // defaults to sourceCompatibility
-
-project.ext {
-    description = "A Java implementation of the JSON Schema specification";
-};
+apply(from: "project.gradle");
 
 /*
  * Repositories to use
@@ -58,40 +74,6 @@ project.ext {
 repositories {
     mavenCentral();
 }
-
-/*
- * List of dependencies
- */
-dependencies {
-    compile(group: "com.github.fge", name: "json-schema-core",
-        version: "1.2.5");
-    compile(group: "javax.mail", name: "mailapi", version: "1.4.3");
-    compile(group: "joda-time", name: "joda-time", version: "2.3");
-    compile(group: "com.googlecode.libphonenumber", name: "libphonenumber",
-        version: "6.2");
-    compile(group: "com.google.code.findbugs", name: "jsr305",
-        version: "3.0.0");
-    compile(group: "net.sf.jopt-simple", name: "jopt-simple", version: "4.6");
-    testCompile(group: "org.testng", name: "testng", version: "6.8.7") {
-        exclude(group: "junit", module: "junit");
-        exclude(group: "org.beanshell", module: "bsh");
-        exclude(group: "org.yaml", module: "snakeyaml");
-    };
-    testCompile(group: "org.mockito", name: "mockito-core", version: "1.9.5");
-    testCompile(group: "org.easytesting", name: "fest-assert", version: "1.4");
-}
-
-javadoc.options.links("http://docs.oracle.com/javase/6/docs/api/");
-javadoc.options.links("http://jsr-305.googlecode.com/svn/trunk/javadoc/");
-javadoc.options.links("http://fasterxml.github.com/jackson-databind/javadoc/2.2.0/");
-javadoc.options.links("http://fasterxml.github.com/jackson-core/javadoc/2.2.0/");
-javadoc.options.links("http://docs.guava-libraries.googlecode.com/git-history/v16.0.1/javadoc/");
-javadoc.options.links("http://fge.github.io/btf/");
-javadoc.options.links("http://fge.github.io/msg-simple/");
-javadoc.options.links("http://fge.github.io/jackson-coreutils/");
-javadoc.options.links("http://fge.github.io/uri-template/");
-javadoc.options.links("http://fge.github.io/json-schema-core/1.2.x/");
-
 
 /*
  * Necessary! Otherwise TestNG will not be used...
@@ -142,27 +124,30 @@ task javadocJar(type: Jar, dependsOn: copyDocFiles) {
     from javadoc.destinationDir;
 }
 
+task fullJar(type: OneJar) {
+    mainClass = "com.github.fge.jsonschema.main.cli.Main";
+    archiveName = "jsonschema.jar";
+}
+
 /*
  * Creates a jar that can be used as a library on java projects.
  * This jar already includes all the dependencies.
  */
 task libJar(type: Jar, dependsOn: jar) {
-    classifier = "lib";
+    appendix = "lib"
     from {
-        configurations.compile.collect { zipTree(it) }
-    };
-    with jar;
+        configurations.compile.findAll {
+            !it.name.contains('mailapi')
+        }.collect { zipTree(it) }
+    }
+    with jar
 }
 
-jar {
-    manifest {
-        attributes("Main-Class": "com.github.fge.jsonschema.main.cli.Main");
-    }
-}
 artifacts {
     archives jar;
     archives sourcesJar;
     archives javadocJar;
+    archives fullJar;
     archives libJar;
 }
 
